@@ -1,12 +1,12 @@
 from threading import Thread
-import pandas as pd
+from datetime import datetime
 import os
+import pandas as pd
 import numpy as np
 from sklearn.model_selection import RepeatedKFold
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
-from datetime import datetime
 
 SEED = 42
 
@@ -14,7 +14,7 @@ def get_first_10_files() -> list:
     files = os.listdir('datasets')
     return files[:10]
 
-def train_rf(df: pd.DataFrame, dataset:str) -> list:
+def train(df: pd.DataFrame, dataset:str) -> list:
     X = df.iloc[:, :-1]
     y = df.iloc[:, -1]
     rf = RandomForestClassifier(random_state=SEED)
@@ -42,7 +42,7 @@ def load_file(filename: str) -> pd.DataFrame:
 
 def loop(file, output):
     df = load_file(f'datasets/{file}')
-    accs = train_rf(df, file)
+    accs = train(df, file)
     output.append(accs)
 
 def main():

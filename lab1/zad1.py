@@ -1,8 +1,8 @@
-import pandas as pd
 import os
 import numpy as np
 from datetime import datetime
-from sklearn.model_selection import RepeatedKFold, train_test_split
+import pandas as pd
+from sklearn.model_selection import RepeatedKFold
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
@@ -27,12 +27,12 @@ def train_rf(df: pd.DataFrame, dataset:str) -> list:
         y_pred = rf.predict(X_test)
         accuracy_rf = accuracy_score(y_test, y_pred)
         results.append(f"{dataset}, fold {fold + 1}, RandomForest, accuracy {accuracy_rf:.4f}")
-        
+
         svm.fit(X_train, y_train)
         y_pred = svm.predict(X_test)
         accuracy_svm = accuracy_score(y_test, y_pred)
         results.append(f"{dataset}, fold {fold + 1}, SVM, accuracy {accuracy_svm:.4f}")
-        
+
     return results
 
 def load_file(filename: str) -> pd.DataFrame:
